@@ -1,5 +1,6 @@
 using UnityEngine;
 
+enum MotionModel { OnPlane, InAir }
 public class RaycastController : MonoBehaviour
 {
     private new UnityEngine.Camera camera = null;
@@ -17,11 +18,10 @@ public class RaycastController : MonoBehaviour
         {
             GameObject selectedObject = raycastHit.collider.gameObject;
 
-            Debug.Log(selectedObject.name + " selected");
-
             if (selectedObject.tag == "Destroyable")
             {
-                Destroy(selectedObject);
+                LifecycleController lifeCycleC = selectedObject.GetComponent<LifecycleController>();
+                lifeCycleC?.OnKillObject();
             }
             return true;
         }
